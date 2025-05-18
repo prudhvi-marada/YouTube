@@ -1,0 +1,65 @@
+/* styles/HomePage.css */
+
+.home-wrapper {
+  padding: 16px;
+  transition: margin-left 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .home-wrapper {
+    margin-left: 60px;
+  }
+}
+
+.category-bar {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.category-btn {
+  background-color: gray;
+  color :white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.category-btn:hover {
+  background-color: white;
+  color:black
+}
+
+.category-btn.active {
+  background-color:white;
+  color: black;
+}
+
+.video-grid {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  height: 80vh;
+  overflow-y: auto;
+
+}
+
+.sidebar-closed {
+  padding-left: 20px;
+}
+
+.sidebar-open {
+  padding-left: 260px; /* depends on sidebar width */
+}
+
+
+

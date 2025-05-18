@@ -1,0 +1,29 @@
+.main-content{
+    display: flex;
+}
+
+.sidebar {
+  width: 240px; /* or any width you like */
+  transition: width 0.3s ease;
+}
+
+.sidebar.closed {
+  width: 0;
+  overflow: hidden;
+}
+
+.content {
+  transition: all 0.3s ease;
+  padding: 16px;
+  flex-grow: 1;
+  min-height: 100vh;
+}
+
+/* Optional if you want spacing based on sidebar state */
+.content.with-sidebar {
+  margin-left: 0;
+}
+
+.content.full-width {
+  margin-left: 0;
+}

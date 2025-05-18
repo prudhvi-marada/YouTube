@@ -1,0 +1,161 @@
+.watch-video-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #f1f1f1;
+  background-color: #0f0f0f;
+  height: 80vh;
+  overflow-y: auto;
+   scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.video-player video {
+  width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+}
+
+.video-details {
+  background-color: #1c1c1c;
+  font-weight: bold;
+  color:white;
+  padding: 1rem;
+  border-radius: 8px;
+  width:65%;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+h2{
+  color:white;
+}
+
+.channel-name{
+  text-align: start;
+   font-weight: bold;
+}
+
+
+.video-actions-container {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.video-stats {
+  color: #606060;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.video-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.video-buttons button {
+  background: gray;
+  width: 100px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.video-buttons button:hover {
+  background: #e1e1e1;
+}
+
+.video-buttons button.active {
+  background: #d3eaff;
+  font-weight: bold;
+}
+
+.subscribe-btn {
+  background: red;
+  color: white;
+  font-weight: bold;
+}
+
+.subscribe-btn.subscribed {
+  background: #777;
+  color: white;
+}
+
+.btn{
+  width:5px;
+  height:50px;
+}
+
+.total-page{
+  display:flex;
+}
+.left-side{
+   width:70%
+}
+
+.right-side{
+  width:30%
+}
+
+.suggested-videos {
+  flex: 3;
+  background: black;
+  padding: 10px;
+  border-radius: 8px;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+}
+
+.suggested-video-card {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.suggested-thumb {
+  width: 120px;
+  height: 70px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.suggested-info h4 {
+  font-size: 14px;
+  margin: 0;
+  color: white;
+}
+
+.suggested-info p {
+  font-size: 12px;
+  color:white;
+  margin: 5px 0;
+}
+
+.suggested-info .channel-name {
+  font-size: 12px;
+  color:white;
+}
+
+h3{
+  color:white;
+}
