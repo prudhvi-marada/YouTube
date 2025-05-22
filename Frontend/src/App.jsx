@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/" element={<HomePage  isOpen={sidebarOpen} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/video" element={<VideoPlayerPage />} />
+          <Route path="/video/:id" element={<VideoPlayerPage />} />
           <Route path="/channel" element={<ChannelPage />} />
           <Route path="/search/:query" element={<SearchResultsPage />} />
         </Routes>

@@ -5,8 +5,8 @@ import '../styles/VideoCard.css';
 const VideoCard = ({ video }) => {
   return (
     <div className="video-card">
-      <Link to={`/watch/${video._id}`}>
-        <img className="video-thumbnail" src={video.thumbnail} alt={video.title} />
+      <Link to={`/video/${video._id}`}>
+        <img className="video-thumbnail" src={video.thumbnailUrl} alt={video.title} />
     </Link>
       <div className="video-info">
         <p className="video-title">{video.title}</p>
