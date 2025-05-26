@@ -9,6 +9,8 @@ import SignupPage from './components/SignupPage';
 import VideoPlayerPage from './components/VideoPlayerPage';
 import ChannelPage from './components/ChannelPage';
 import SearchResultsPage from './components/SearchResultsPage';
+import CreateChannelPage from './components/createChannelPage';
+import UploadVideoForm from './components/UploadVideoForm';
 
 const App = () => {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -25,11 +27,15 @@ const App = () => {
       <Sidebar isOpen={sidebarOpen} />
           <div className={`content ${sidebarOpen ? 'with-sidebar' : 'full-width'}`}>
         <Routes>
-          <Route path="/" element={<HomePage  isOpen={sidebarOpen} />} />
+          <Route path="/" element={<HomePage sidebarOpen={sidebarOpen} />} />
+          <Route path="/search/:term" element={<HomePage sidebarOpen={sidebarOpen} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/video/:id" element={<VideoPlayerPage />} />
           <Route path="/channel" element={<ChannelPage />} />
+          <Route path="/create-channel" element={<CreateChannelPage />} />
+          <Route path="/uploadVideo" element={<UploadVideoForm/>} />
+
           <Route path="/search/:query" element={<SearchResultsPage />} />
         </Routes>
         </div>

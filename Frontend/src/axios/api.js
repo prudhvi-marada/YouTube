@@ -127,7 +127,7 @@ export const deleteComment = async (commentId, token) => {
 // Channel Management
 export const getChannelDetails = async (userId) => {
   try {
-    const response = await api.get(`/channel/${userId}`);
+    const response = await api.get(`/channels/user/${userId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || error.message);
@@ -144,11 +144,19 @@ export const searchVideos = async (query) => {
   }
 };
 
-export const filterVideos = async (filters) => {
-  try {
-    const response = await api.get(`/videos/filter`, { params: filters });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+
+export const createChannel = async (channelData) => {
+  const token = localStorage.getItem('authToken');
+
+  const response = await api.post('/channels/create',
+    channelData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
 };
+
+

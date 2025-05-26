@@ -1,0 +1,77 @@
+.v-upload-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+
+}
+
+.v-upload-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.v-upload-form label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #444;
+  font-weight: 600;
+}
+
+.v-upload-form input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+.v-upload-form input:focus,
+textarea:focus,
+select:focus {
+  border-color: #5a67d8;
+  outline: none;
+}
+
+.v-upload-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.v-upload-form button[type="submit"] {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #5a67d8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+
+.v-upload-form button[type="submit"]:hover {
+  background-color: #434190;
+  margin-bottom: 10px;
+}
+
+.v-upload-form p {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+  color: #2d3748;
+}

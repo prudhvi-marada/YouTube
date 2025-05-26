@@ -1,64 +1,72 @@
+// SignupPage.jsx
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { registerUser } from '../api.js';
+import { registerUser } from '../axios/api';
 import '../styles/SignupPage.css';
 
 const SignupPage = () => {
+  const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-//   const [errorMessage, setErrorMessage] = useState('');
-//   const history = useHistory();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    // if (password !== confirmPassword) {
-    //   setErrorMessage("Passwords don't match");
-    //   return;
-    // }
-    // try {
-    //   const data = await registerUser({ email, password });
-    //   history.push('/login');
-    // } catch (error) {
-    //   setErrorMessage(error.message);
-    // }
+    setLoading(true);
+
+    const userData = { name, avatar, email, password };
+
+    try {
+      await registerUser(userData);
+      setLoading(false);
+      window.location.href = '/login';
+    } catch (error) {
+      setError(error.response?.data?.message || 'Failed to register');
+      setLoading(false);
+    }
   };
 
   return (
     <div className="signup-page">
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSignup}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
-        <button type="submit">Sign Up</button>
+      <form onSubmit={handleSignup} className="signup-form">
+        <h2>Create Account</h2>
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Avatar Image URL"
+          value={avatar}
+          onChange={(e) => setAvatar(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Create a Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        {error && <p className="error">{error}</p>}
+        <button type="submit" disabled={loading}>
+          {loading ? 'Signing up...' : 'Sign Up'}
+        </button>
+        <p className="login-text">
+          Already have an account? <a href="/login">Login</a>
+        </p>
       </form>
-      <p>Already have an account? <a href="/login">Login</a></p>
     </div>
   );
 };

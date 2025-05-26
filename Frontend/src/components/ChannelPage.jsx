@@ -1,107 +1,92 @@
-//import React, { useEffect, useState } from 'react';
-//import { useParams } from 'react-router-dom';
-//import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import '../styles/ChannelPage.css';
-
-
-// dummyChannel.js
-const channel = {
-  _id: 'channel123',
-  name: 'CodeMaster Channel',
-  description: 'Sharing programming tutorials, tech reviews, and career advice for developers.',
-  profilePicture: 'https://randomuser.me/api/portraits/men/15.jpg',
-  coverImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
-  createdAt: '2022-06-12T09:00:00Z',
-  subscribersCount: 15400,
-  totalVideos: 42,
-  owner: {
-    _id: 'user123',
-    username: 'CodeMaster',
-    email: 'codemaster@example.com',
-  },
-  videos: [
-    {
-      _id: 'vid1',
-      title: 'React for Beginners – Complete Guide (2025)',
-      thumbnail: 'https://i.ytimg.com/vi/dGcsHMXbSOA/maxresdefault.jpg',
-      views: 340000,
-      createdAt: '2025-01-05T12:00:00Z',
-    },
-    {
-      _id: 'vid2',
-      title: 'Build a Full-Stack App with MERN in 45 Minutes',
-      thumbnail: 'https://i.ytimg.com/vi/7CqJlxBYj-M/maxresdefault.jpg',
-      views: 180000,
-      createdAt: '2025-02-18T15:30:00Z',
-    },
-    {
-      _id: 'vid3',
-      title: 'Top 10 JavaScript Interview Questions & Answers',
-      thumbnail: 'https://i.ytimg.com/vi/W6NZfCO5SIk/maxresdefault.jpg',
-      views: 220000,
-      createdAt: '2025-03-12T10:00:00Z',
-    },
-  ],
-};
-
+import { getChannelDetails,deleteVideo} from '../axios/api'; // You must define this API call
+import { Link } from 'react-router-dom';
+const storedUser = JSON.parse(localStorage.getItem('user'));
+const token = localStorage.getItem('authToken');
 
 
 
 const ChannelPage = () => {
-  // const { id } = useParams();
-  // const [channel, setChannel] = useState(null);
-  // const [videos, setVideos] = useState([]);
+  const [channel, setChannel] = useState(null);
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchChannelData = async () => {
-  //     try {
-  //       const channelRes = await axios.get(`/api/channels/${id}`);
-  //       setChannel(channelRes.data);
+  useEffect(() => {
+    const fetchChannel = async () => {
+      try {
+        const data = await getChannelDetails(storedUser.id);
+        localStorage.setItem('chanelId',data._id)
+        setChannel(data);
+        setVideos(data.videos);
+      } catch (error) {
+        console.error('Error fetching channel:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //       const videosRes = await axios.get(`/api/videos/channel/${id}`);
-  //       setVideos(videosRes.data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch channel data:', error);
-  //     }
-  //   };
+    fetchChannel();
+  }, []);
 
-  //   fetchChannelData();
-  // }, [id]);
 
- // if (!channel) return <div className="loading">Loading...</div>;
+ const handelDelete =async (id) => {
+    await deleteVideo(id,token);
+    window.location.reload();
+  };
+
+
+  if (loading) return <div className="channel-page-c">Loading...</div>;
+
+  if (!channel) {
+    return (
+      <div className="channel-page-c no-channel-c">
+        <h2>You haven't created a channel yet</h2>
+        <Link to="/create-channel" className="create-btn-c">Create Your Channel</Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="channel-page">
-      <div className="channel-header">
-        <div className="channel-banner">
-          <img src={channel.coverImage} alt={channel.name} />
+    <div className="channel-page-c">
+      <div className="channel-banner-c">
+        <img src={channel.channelBanner || '/default-banner.jpg'} alt="Channel Banner" />
+      </div>
+
+      <div className="channel-info-c">
+        <div className="left-c">
+         <img src={storedUser.avatar} alt="Channel-Logo" className="Avatar-channel"/>
         </div>
-        <div className="channel-info">
-          <h2>{channel.name}</h2>
+        <div className="right-c">
+           <h2>{channel.channelName}</h2>
           <p>{channel.description}</p>
-          <div className="channel-stats">
-            <span>{channel.subscribers} Subscribers</span>
-            <span>{channel.videos.length} Videos</span>
+        </div>
+      </div>
+
+      <div className="channel-tabs-c">
+        <button className="active-c">Your Videos</button>
+        <Link to="/uploadVideo">Add Video</Link>
+        
+      </div>
+      <hr className="channel-underline-c" />
+
+      <div className="channel-videos-c">
+        {videos.length === 0 ? (
+          <p className="no-videos-c">You haven't added any videos yet.</p>
+        ) : (
+          <div className="video-list-c">
+            {videos.map((video) => (
+              <div className="video-card-c" key={video._id}>
+              <Link to={`/video/${video._id}`}>
+                <img src={video.thumbnailUrl} alt={video.title} />
+                </Link>
+                <div className="delete-fun">
+                <h4>{video.title}</h4> <div className='del' onClick={()=>handelDelete(video._id)}>🗑️</div>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
-      <div className="middle"> 
-        <h3>Videos</h3>
-        <h3>shorts </h3>
-        <h3>live</h3>
-        <h3>posts</h3>
-      </div>
-      <div className="video-list">
-        <div className="videos">
-          {channel.videos.map((video) => (
-            <div key={video._id} className="video-item">
-              <a href={`/watch/${video._id}`}>
-                <img src={video.thumbnail} alt={video.title} />
-                <div className="video-title">{video.title}</div>
-              </a>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
     </div>
   );

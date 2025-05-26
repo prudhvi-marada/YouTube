@@ -1,5 +1,5 @@
-import React, { useState ,useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState ,useRef ,useEffect} from 'react';
+import { useNavigate ,Link,useLocation} from 'react-router-dom';
 import '../styles/Header.css';
 import youtubeLogo from '../assets/youtube.png';
 import menuLogo from '../assets/menu.png';
@@ -8,10 +8,21 @@ import loadingGif from '../assets/loadingGif.gif';
 
 
 
+
+
 const Header = ({ toggleSidebar }) => {
+   const [userName, setUserName] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const formRef = useRef();
+   const formRef = useRef();
+   const location = useLocation();
+  const userData = JSON.parse(localStorage.getItem('user'));
+
+
+
+   useEffect(() => {
+    setUserName(userData?.name || null);
+  }, [location]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -19,6 +30,16 @@ const Header = ({ toggleSidebar }) => {
       navigate(`/search/${searchTerm}`);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('chanelId');
+
+    setUserName(null);
+    navigate('/login');
+  };
+
 
   const handleImgClick = () => {
     formRef.current?.requestSubmit(); // Triggers form submission
@@ -50,9 +71,18 @@ const Header = ({ toggleSidebar }) => {
       </form>
 
       <div className="auth-buttons">
-        {/* <button onClick={() => navigate('/login')}>Login</button> */}
-        <button onClick={() => navigate('/signup')}>Sign Up</button>
-      </div>
+        {/* <button onClick={() => navigate('/login')}>logout</button> */}
+       <nav>
+        {userName ? (
+          <>
+          <span className="user-name">{userName}</span>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          </>
+         ) : (
+          <Link to="/login" className="signin-btn">Sign In</Link>
+          )}
+      </nav>    
+    </div>
     </header>
   );
 };

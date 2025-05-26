@@ -1,18 +1,16 @@
 import jwt from 'jsonwebtoken';
 
 const checkUser=(req,res,next)=>{
-    const t=req.headers.authorization;
-    if (!t){
-        return res.status(401).json({message:"token not found"});    
-    }
-    try {
-       const checkToken=jwt.verify(t.split(' ')[1],process.env.SECRET_CODE);
-       req.user = { userId: checkToken.userId };
-       next()
-    }
-    catch(e){
-   return res.status(401).json({message:'Invalid Token'})
-    }
-}
+     const token = req.header('Authorization')?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ message: 'No token provided' });
 
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_CODE);
+    req.user = { userId:decoded.userId }; // ✅ Needed for createChannel
+    next();
+  } catch (e) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+};
+ 
 export default checkUser;

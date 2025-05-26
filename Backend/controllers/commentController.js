@@ -22,7 +22,7 @@ export const getCommentsByVideo=async(req,res)=>{
     try{  
          const Id=req.params.videoId
          const comments = await Comment.find({videoId:Id})
-      .populate('userId', 'username avatar')
+      .populate('userId', 'name avatar')
       .sort({ timestamp: -1 });
 
     res.json(comments);

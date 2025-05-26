@@ -1,51 +1,55 @@
+// LoginPage.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../axios/api';
-import '../styles/LoginPage.css';
+import { loginUser } from '../axios/api'; // Import login API
+import '../styles/LoginPage.css'
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
- const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    const userData = { email, password };
+    
     try {
-      const data = await loginUser({ email, password });
-      localStorage.setItem('token', data.token);
-     navigate('/');
+      const data = await loginUser(userData); // Call the login API
+      localStorage.setItem('authToken', data.token); 
+      localStorage.setItem('user', JSON.stringify(data.user)); // Store the token in local storage
+      setLoading(false);
+      // Redirect user to homepage or dashboard
+      window.location.href = '/';
     } catch (error) {
-      setErrorMessage(error.message);
+      setError(error.message || 'Failed to login');
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
-      <h1>Login</h1>
       <form onSubmit={handleLogin}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {errorMessage && <p className="error">{errorMessage}</p>}
-        <button type="submit">Login</button>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p className="error">{error}</p>}
+        <button type="submit" disabled={loading}>Login</button>
+         <p className="signup-text">
+         Don't have an account? <a href="/signup">Sign up</a>
+         </p>
       </form>
-      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+     
     </div>
   );
 };

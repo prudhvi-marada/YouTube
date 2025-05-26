@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/VideoPlayerPage.css';  
 import ReactPlayer from 'react-player'
-import { getAllVideos,getVideoById} from '../axios/api';
+import { getAllVideos,getVideoById,getComments, addComment, deleteComment } from '../axios/api';
 import { Link } from 'react-router-dom';
+
 
 
 const WatchVideo = () => {
     const [video,setVideo]=useState(null);
     const [videos, setVideos] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('authToken');
     const { id } = useParams();
 
     
@@ -32,6 +37,37 @@ const WatchVideo = () => {
    };
   
   // const [channel, setChannel] = useState(null);
+  const fetchVideoComments = async () => {
+    try {
+      const res = await getComments(id);
+      setComments(res);  // This sets comments to be rendered
+    } catch (error) {
+      console.error('Failed to fetch comments:', error.message);
+    }
+  };
+
+  const handleAddComment = async () => {
+  if (!newComment.trim()) return;
+  try {
+    await addComment({ text: newComment }, id, token);
+    setNewComment('');
+    fetchVideoComments();
+  } catch (error) {
+    console.error('Failed to add comment:', error.message);
+  }
+};
+
+const handleDeleteComment = async (commentId) => {
+  if (window.confirm('Are you sure you want to delete this comment?')) {
+    try {
+      await deleteComment(commentId, token);
+      fetchVideoComments();
+    } catch (error) {
+      console.error('Delete failed:', error.message);
+    }
+  }
+};
+
 
  useEffect(() => {
   const fetchVideo = async () => {
@@ -41,8 +77,10 @@ const WatchVideo = () => {
     } catch (error) {
       console.error('Failed to fetch video or channel data:', error);
     }
-  };
+  }; 
 
+
+  fetchVideoComments();
   fetchVideo();
   fetchVideos()
 }, [id,selectedCategory]);
@@ -50,7 +88,9 @@ const WatchVideo = () => {
 if (!video) return <div className="loading">Loading...</div>;
 
   return (
+    
     <div className='total-page'>
+
     <div className='left-side'>
     <div className="watch-video-container">
       <div className="video-player">
@@ -95,7 +135,46 @@ if (!video) return <div className="loading">Loading...</div>;
         <p>{video.description}</p>
         
       </div>
+
     </div>
+  <div className="video-comments-section">
+  <h3 className="video-comments-title">Add Comment</h3>
+  <div className="video-comment-input-wrapper">
+    <input
+      type="text"
+      placeholder="Write a comment..."
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+      className="video-comment-input"
+    />
+    <button onClick={handleAddComment} className="video-comment-post-btn">Post</button>
+  </div>
+
+  <div className="video-comments-list">
+    {comments.map((comment) => (
+      <div key={comment._id} className="video-comment-item">
+        <img src={comment.userId.avatar} alt="avatar" className="video-comment-avatar" />
+        <div className="video-comment-content">
+          <strong className="video-comment-author">{comment.userId.name}</strong>
+          <p className="video-comment-text">{comment.text}</p>
+          <div className="video-comment-meta">
+            <span>{new Date(comment.timestamp).toLocaleString()}</span>
+            {user?.id == comment.userId._id && (
+              <button
+                onClick={() => handleDeleteComment(comment._id)}
+                className="video-comment-delete-btn"
+                title="Delete"
+              >
+                🗑️
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+   </div>
+   
     </div>
     <div className='right-side'>
 
@@ -117,6 +196,9 @@ if (!video) return <div className="loading">Loading...</div>;
             
       </div>
     </div>
+    
+    
+
   );
 };
 

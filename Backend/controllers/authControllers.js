@@ -4,13 +4,13 @@ import jwt from 'jsonwebtoken';
 
 export const registerUser=async(req,res)=>{
     try{
-        const {name,email,password}=req.body;
+        const {name,email,password,avatar}=req.body;
         const checkUser=await User.findOne({email});
         if (checkUser){
             return  res.status(400).json({message:"user already exits try another mail"})
         }
         const hpassword=await bcrypt.hash(password,10);
-        const user=new User({name,email,password:hpassword});
+        const user=new User({name,email,password:hpassword},avatar);
         await user.save();
        res.status(201).json({message:"user registerd successfully"})
     }
@@ -33,13 +33,13 @@ export const loginUser=async(req,res)=>{
         }
         const t=jwt.sign({userId:user._id},process.env.SECRET_CODE,{expiresIn:'365d'});
         res.json({
-            t,
+            token:t,
             user:
             {
                 id:user._id,
-                username:user.name,
-                email:user.mail,
-                avatar:user.avarar
+                name:user.name,
+                email:user.email,
+                avatar:user.avatar
         }})
     }
     catch(e){

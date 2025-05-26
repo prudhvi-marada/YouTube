@@ -44,22 +44,21 @@
 
 .video-grid {
   display: grid;
-  gap: 10px;
+  gap: 15px;
   padding: 10px;
   transition: all 0.3s ease;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   height: 80vh;
   overflow-y: auto;
-
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
 }
 
 .sidebar-closed {
   padding-left: 20px;
 }
 
-.sidebar-open {
-  padding-left: 260px; /* depends on sidebar width */
-}
+
 
 
 

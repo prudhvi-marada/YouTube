@@ -5,11 +5,15 @@
   gap: 1.5rem;
   color: #f1f1f1;
   background-color: #0f0f0f;
+}
+
+.left-side{
   height: 80vh;
   overflow-y: auto;
    scrollbar-width: none; 
   -ms-overflow-style: none; 
 }
+
 
 .video-player video {
   width: 100%;
@@ -52,14 +56,6 @@ h2{
   margin-bottom: 16px;
 }
 
-.video-stats {
-  color: #606060;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
 
 .video-buttons {
   display: flex;
@@ -107,7 +103,7 @@ h2{
   display:flex;
 }
 .left-side{
-   width:70%
+   width:80%
 }
 
 .right-side{
@@ -159,3 +155,104 @@ h2{
 h3{
   color:white;
 }
+
+.video-comments-section {
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.video-comments-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.video-comment-input-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.video-comment-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+  outline: none;
+}
+
+.video-comment-input::placeholder {
+  color: #aaa;
+}
+
+.video-comment-post-btn {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.video-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.video-comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.video-comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.video-comment-content {
+  flex: 1;
+}
+
+.video-comment-author {
+  color: white;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.video-comment-text {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.video-comment-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: gray;
+}
+
+.video-comment-delete-btn {
+  background: none;
+  color: red;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+

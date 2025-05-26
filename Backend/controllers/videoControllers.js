@@ -8,7 +8,7 @@ export const uploadVideo=async(req,res)=>{
         const newVideo=new Video({title, thumbnailUrl, videoUrl, description,channel: channelId,uploader: uploaderId,category})
         const v=await newVideo.save();
         await Channel.findByIdAndUpdate(channelId,{
-            $push:{Videos:v._id}
+            $push:{videos:v._id}
         });
         res.status(201).json(v);
     }
@@ -19,9 +19,10 @@ export const uploadVideo=async(req,res)=>{
 };
 
 
+
 export const getVideos=async(req,res)=>{
     try {
-         const videos=await Video.find().populate('channel uploader', 'channelName username');
+         const videos=await Video.find().populate('channel', 'channelName').populate('uploader', 'name avatar');
          res.json(videos)
     }catch(e){
          res.status(500).json({message:"failed...To fetch videos ",error: e.message})

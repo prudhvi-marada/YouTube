@@ -33,3 +33,19 @@ export const getChannel=async(req,res)=>{
    res.status(500).json({message:"Error while fetching",error:e.message});
     }
 }
+
+export const getChannelByUserId = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const channel = await Channel.findOne({ owner: userId }).populate('videos');
+
+    if (!channel) {
+      return res.status(404).json({ message: 'Channel not found for this user' });
+    }
+
+    res.status(200).json(channel);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
