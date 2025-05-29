@@ -4,7 +4,7 @@
   color: #333;
   height: 80vh;
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; 
   -ms-overflow-style: none; 
 }
 

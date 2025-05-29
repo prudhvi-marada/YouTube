@@ -35,7 +35,6 @@ const CreateChannelPage = () => {
       await createChannel({ channelName: channelName.trim(), description: description.trim(), channelBanner: channelBanner.trim() });
       navigate('/channel'); // Redirect to user's channel page on success
     } catch (err) {
-      // err.response?.data?.message might be undefined, fallback to err.message
       setError(err.response?.data?.message || err.message || 'Failed to create channel');
     } finally {
       setLoading(false);

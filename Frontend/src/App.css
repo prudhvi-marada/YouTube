@@ -3,7 +3,7 @@
 }
 
 .sidebar {
-  width: 15vw; /* or any width you like */
+  width: 15vw; 
   transition: width 0.3s ease;
 }
 
@@ -19,7 +19,6 @@
   min-height: 100vh;
 }
 
-/* Optional if you want spacing based on sidebar state */
 .content.with-sidebar {
   margin-left: 0;
 }

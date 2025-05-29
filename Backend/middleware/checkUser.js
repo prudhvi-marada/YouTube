@@ -6,7 +6,7 @@ const checkUser=(req,res,next)=>{
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_CODE);
-    req.user = { userId:decoded.userId }; // ✅ Needed for createChannel
+    req.user = { userId:decoded.userId }; //  Needed for createChannel
     next();
   } catch (e) {
     res.status(401).json({ message: 'Invalid token' });

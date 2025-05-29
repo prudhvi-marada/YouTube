@@ -25,7 +25,7 @@ const WatchVideo = ({ sidebarOpen }) => {
   const fetchVideoComments = async () => {
     try {
       const res = await getComments(id);
-      setComments(res.data);  // This sets comments to be rendered
+      setComments(res.data);  
     } catch (error) {
       console.error('Failed to fetch comments:', error.message);
     }

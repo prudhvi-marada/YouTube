@@ -7,7 +7,7 @@ import '../App.css'
 const UploadVideoForm = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('authToken');
-  const channelId = localStorage.getItem('chanelId'); // fixed typo: from channel_Id to channelId
+  const channelId = localStorage.getItem('chanelId'); 
   const [formData, setFormData] = useState({
     title: '',
     thumbnailUrl: '',

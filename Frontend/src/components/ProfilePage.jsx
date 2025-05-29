@@ -1,4 +1,3 @@
-// src/components/Profile.jsx
 import React, { useState } from 'react';
 import { updateAvatarURL } from '../axios/api';
 import { Link,useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/ChannelPage.css';
 import '../App.css'
-import { getChannelDetails, deleteVideo } from '../axios/api'; // You must define this API call
+import { getChannelDetails, deleteVideo } from '../axios/api'; 
 import { Link } from 'react-router-dom';
 import Profile from './ProfilePage';
 

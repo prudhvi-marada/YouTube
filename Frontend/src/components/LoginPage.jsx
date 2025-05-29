@@ -21,7 +21,6 @@ const LoginPage = () => {
       setLoading(false);
       window.location.href = '/'; // Redirect after login
     } catch (err) {
-      // More robust error message handling
       const message =
         err.response?.data?.message ||
         err.message ||
