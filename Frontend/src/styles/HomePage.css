@@ -70,17 +70,23 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
+    margin: 0px;
   }
-   .video-card iframe,
+
   .video-grid{
   display: grid;
   grid-template-columns: 1fr; 
-   
   }
 
   .sidebar{
     display: none;
   }
+
+ .category-bar{
+  scrollbar-width: 0;
+ }
+
 }
 
 

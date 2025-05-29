@@ -135,13 +135,16 @@ nav {
    .menu-icon {
     display: none;
   }
-
+  
+  .header{
+    width:100%;
+  }
   .logo h2 {
     font-size: 18px;
   }
 
   .search-bar {
-    max-width: 200px;
+    max-width: 120px;
     margin: 0 10px;
   }
 
@@ -164,3 +167,6 @@ nav {
     padding: 4px 8px;
   }
 }
+
+
+
