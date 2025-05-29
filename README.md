@@ -37,34 +37,45 @@ A full-stack **YouTube Clone** built with the **MERN stack** (MongoDB, Express, 
 - 📝 Manage their uploaded videos
 - 📊 View video details on their own channel
 
-********************How to Run ******************
+## How to Run 
 
 ### Setup Backend:
 -run below commands to setup Backend :
+
 -cd backend
+
 -npm install
 
 
 ### setup .env in backend:
 -PORT=3000
+
 -MONGODB_URI=your_mongodb_uri
+
 -JWT_SECRET=your_secret
 
 ### Run Backend:
 -npm start
 
 ##  Setup Frontend:
+
 -cd Frontend
+
 -npm install
 
 ### setup .env in backend:
+
 -VITE_API_BASE_URL=/api
 
 ### Run frontend:
+
 -npm run dev
 
 ### Learnings
 -Deep understanding of MERN stack integration
+
 -JWT-based auth and protected routes
+
 -Responsive UI design 
+
 -Deployment using Vercel and Render
