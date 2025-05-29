@@ -3,7 +3,7 @@
   color: #fff;
   border-radius: 8px;
   transition: transform 0.2s ease-in-out;
-  width: 100%;
+  width: 28vw;
   cursor: pointer;
 }
 
@@ -70,4 +70,15 @@
 .video-title {
   font-weight: 150;
  
+}
+
+@media screen and (max-width: 768px) {
+ 
+  .sidebar{
+    display: none;
+  }
+.video-card{
+  width:100%;
+}
+
 }

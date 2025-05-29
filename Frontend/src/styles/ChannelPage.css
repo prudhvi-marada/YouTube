@@ -65,21 +65,22 @@
 }
 
 .video-list-c {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+  width:100%;
+  flex-wrap:wrap;
+  gap: 15px;
+  padding: 10px;
 }
 
 .video-card-c {
-  width: 400px;
+  width: 27vw; 
   background: black;
   border-radius: 10px;
   overflow: hidden;
   padding: 10px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
-
+  
 }
 
 .video-card-c img {
@@ -129,4 +130,24 @@
 .del{
   align-self: end;
   margin-bottom:20px;
+}
+
+@media screen and (max-width: 768px) {
+  .video-list-c
+   {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+   .video-card iframe,
+  .video-card-c{
+  display: grid;
+  grid-template-columns: 1fr; 
+  width:100%;
+   
+  }
+
+  .sidebar{
+    display: none;
+  }
 }

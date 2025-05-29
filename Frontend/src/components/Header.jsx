@@ -1,88 +1,90 @@
-import React, { useState ,useRef ,useEffect} from 'react';
-import { useNavigate ,Link,useLocation} from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import '../styles/Header.css';
 import youtubeLogo from '../assets/youtube.png';
 import menuLogo from '../assets/menu.png';
 import loadingGif from '../assets/loadingGif.gif';
-
-
-
-
-
+import '../App.css'
 
 const Header = ({ toggleSidebar }) => {
-   const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-   const formRef = useRef();
-   const location = useLocation();
-  const userData = JSON.parse(localStorage.getItem('user'));
+  const formRef = useRef();
+  const location = useLocation();
 
+  // Parse user data safely
+  const getUserData = () => {
+    try {
+      const data = localStorage.getItem('user');
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      console.error('Error parsing user data from localStorage:', error);
+      return null;
+    }
+  };
 
-
-   useEffect(() => {
-    setUserName(userData?.name || null);
+  useEffect(() => {
+    const user = getUserData();
+    setUserName(user?.name || null);
   }, [location]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/search/${searchTerm}`);
+    const trimmedTerm = searchTerm.trim();
+    if (trimmedTerm) {
+      navigate(`/search/${encodeURIComponent(trimmedTerm)}`);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('chanelId');
-
-    setUserName(null);
-    navigate('/login');
+  const handleImgClick = () => {
+    formRef.current?.requestSubmit();
   };
 
-
-  const handleImgClick = () => {
-    formRef.current?.requestSubmit(); // Triggers form submission
+  // Defensive toggleSidebar call
+  const handleToggleSidebar = () => {
+    if (typeof toggleSidebar === 'function') {
+      toggleSidebar();
+    } else {
+      console.warn('toggleSidebar prop is not a function');
+    }
   };
 
   return (
     <header className="header">
-       <div className="left-section">
-        <img src={menuLogo} alt="menu" className="menu-icon" onClick={toggleSidebar} />
+      <div className="left-section">
+        <img src={menuLogo} alt="menu" className="menu-icon" onClick={handleToggleSidebar} />
         <div className="logo" onClick={() => navigate('/')}>
-        <img src={youtubeLogo} alt="YouTube" />
-        <h2>YouTube</h2>
-      </div>
+          <img src={youtubeLogo} alt="YouTube" />
+          <h2>YouTube</h2>
+        </div>
       </div>
 
-      <form className="search-bar" onSubmit={handleSearch}  ref={formRef}>
+      <form className="search-bar" onSubmit={handleSearch} ref={formRef}>
         <input
           type="text"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          aria-label="Search videos"
         />
-        <img
-         src={loadingGif} 
-         alt="Loading..." 
-         className="gif-icon"
-         onClick={handleImgClick}
-          />
+        <img src={loadingGif} alt="Search" className="gif-icon" onClick={handleImgClick} style={{ cursor: 'pointer' }} />
       </form>
 
       <div className="auth-buttons">
-        {/* <button onClick={() => navigate('/login')}>logout</button> */}
-       <nav>
-        {userName ? (
-          <>
-          <span className="user-name">{userName}</span>
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
-          </>
-         ) : (
-          <Link to="/login" className="signin-btn">Sign In</Link>
+        <nav>
+          {userName ? (
+            <>
+            <Link to="/profile"> <span className="user-name">{userName}</span> </Link> 
+            
+            </>
+          ) : (
+            <Link to="/login" className="signin-btn">
+              Sign In
+            </Link>
           )}
-      </nav>    
-    </div>
+        </nav>
+      </div>
     </header>
   );
 };

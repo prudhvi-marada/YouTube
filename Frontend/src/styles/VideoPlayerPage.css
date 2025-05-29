@@ -7,6 +7,8 @@
   background-color: #0f0f0f;
 }
 
+
+
 .left-side{
   height: 80vh;
   overflow-y: auto;
@@ -27,7 +29,7 @@
   color:white;
   padding: 1rem;
   border-radius: 8px;
-  width:65%;
+  width:95%;
 }
 
 .loading {
@@ -50,7 +52,7 @@ h2{
 .video-actions-container {
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  gap: 10px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 12px;
   margin-bottom: 16px;
@@ -61,6 +63,7 @@ h2{
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-left: 50px;
 }
 
 .video-buttons button {
@@ -72,6 +75,7 @@ h2{
   cursor: pointer;
   font-size: 14px;
   transition: background 0.3s;
+  
 }
 
 .video-buttons button:hover {
@@ -101,13 +105,22 @@ h2{
 
 .total-page{
   display:flex;
+  
 }
+.sidebar-open{
+  width:85vw;
+  
+}
+.sidebar-closed{
+  width:100vw;
+}
+
 .left-side{
-   width:80%
+   width:75%
 }
 
 .right-side{
-  width:30%
+  width:25%
 }
 
 .suggested-videos {
@@ -124,8 +137,11 @@ h2{
 .suggested-video-card {
   display: flex;
   margin-bottom: 15px;
+  margin-right: 5px;
   gap: 10px;
   cursor: pointer;
+  height:80px;
+  overflow: hidden;
 }
 
 .suggested-thumb {
@@ -150,6 +166,8 @@ h2{
 .suggested-info .channel-name {
   font-size: 12px;
   color:white;
+  overflow:hidden ;
+  text-overflow: ellipsis;
 }
 
 h3{
@@ -254,5 +272,71 @@ h3{
   cursor: pointer;
 }
 
+.Avatar{
+  width:6vw;
+  height:6vh;
+  border-radius: 100%;
+}
 
+.video-stats{
+  margin-left: 0px;
+}
 
+.L-D{
+  margin-left: 3px;
+}
+
+.l-d{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+
+@media screen and (max-width: 768px) {
+
+ .sidebar {
+    display: none;
+  }
+
+  .total-page {
+    display: flex;
+    flex-direction: column; 
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .left-side {
+    width: 100%;
+    height: auto;
+  }
+
+  .right-side {
+    width: 100%;
+    height: auto;
+  }
+
+  .video-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .hideb {
+    display: none;
+  }
+
+  .btn {
+    width: 10px;
+    height: 25px;
+  }
+
+  .suggested-videos {
+    width:100%;
+    height: auto; 
+    padding: 10px 0;
+  }
+
+  .suggested-video-card {
+   width:100%;
+  }
+
+}

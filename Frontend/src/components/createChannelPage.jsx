@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/CreateChannelPage.css';
 import { createChannel } from '../axios/api';
+import '../App.css'
 
 const CreateChannelPage = () => {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ const CreateChannelPage = () => {
   const [description, setDescription] = useState('');
   const [channelBanner, setChannelBanner] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const token = localStorage.getItem('authToken');
 
   useEffect(() => {
@@ -19,12 +22,23 @@ const CreateChannelPage = () => {
 
   const handleCreateChannel = async (e) => {
     e.preventDefault();
+    setError('');
+
+    // Basic front-end validation for empty or whitespace-only strings
+    if (!channelName.trim() || !description.trim() || !channelBanner.trim()) {
+      setError('Please fill in all fields properly.');
+      return;
+    }
 
     try {
-      await createChannel({ channelName, description, channelBanner });
-      navigate('/channel'); // Redirect to user's channel page
+      setLoading(true);
+      await createChannel({ channelName: channelName.trim(), description: description.trim(), channelBanner: channelBanner.trim() });
+      navigate('/channel'); // Redirect to user's channel page on success
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create channel');
+      // err.response?.data?.message might be undefined, fallback to err.message
+      setError(err.response?.data?.message || err.message || 'Failed to create channel');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,12 +52,14 @@ const CreateChannelPage = () => {
           value={channelName}
           onChange={(e) => setChannelName(e.target.value)}
           required
+          disabled={loading}
         />
         <textarea
           placeholder="Channel Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+          disabled={loading}
         />
         <input
           type="text"
@@ -51,9 +67,12 @@ const CreateChannelPage = () => {
           value={channelBanner}
           onChange={(e) => setChannelBanner(e.target.value)}
           required
+          disabled={loading}
         />
         {error && <p className="error">{error}</p>}
-        <button type="submit">Create Channel</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Creating...' : 'Create Channel'}
+        </button>
       </form>
     </div>
   );

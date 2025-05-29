@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set the base URL for your API
-const BASE_URL = 'http://localhost:5000/api/'; // Update this to your actual backend URL
+const BASE_URL = '/api'; // Update this to your actual backend URL
 
 // Axios instance to handle API calls
 const api = axios.create({
@@ -13,135 +13,101 @@ const api = axios.create({
 
 // User Authentication
 export const registerUser = async (userData) => {
-  try {
+  
     const response = await api.post('/auth/register', userData);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+ 
 };
 
 export const loginUser = async (userData) => {
-  try {
     const response = await api.post('/auth/login', userData);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
 };
 
 export const getUserDetails = async (token) => {
-  try {
+  
     const response = await api.get('/user/profile', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
 };
 
 // Video Management
 export const getAllVideos = async () => {
-  try {
+  
     const response = await api.get('/videos');
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+  
 };
 
 export const uploadVideo = async (videoData, token) => {
-  try {
+  
     const response = await api.post('/videos', videoData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
 };
 
 export const getVideoById = async (videoId) => {
-  try {
     const response = await api.get(`/videos/${videoId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+ 
 };
 
 export const deleteVideo = async (videoId, token) => {
-  try {
+   
     const response = await api.delete(`/videos/${videoId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+  
 };
 
 // Comment Management
 export const addComment = async (commentData, videoId, token) => {
-  try {
     const response = await api.post(`/comments`, { ...commentData, videoId }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+  
 };
 
 export const getComments = async (videoId) => {
-  try {
     const response = await api.get(`/comments/${videoId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+  
 };
 
 export const deleteComment = async (commentId, token) => {
-  try {
     const response = await api.delete(`/comments/${commentId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+ 
 };
 
 // Channel Management
 export const getChannelDetails = async (userId) => {
-  try {
     const response = await api.get(`/channels/user/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+ 
 };
 
 // Search & Filter
 export const searchVideos = async (query) => {
-  try {
     const response = await api.get(`/videos/search`, { params: { query } });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || error.message);
-  }
+    return response;
+ 
 };
 
 
@@ -156,7 +122,30 @@ export const createChannel = async (channelData) => {
       },
     }
   );
-  return response.data;
+  return response;
 };
 
 
+// Like Video API
+export const likeVideo = async (videoId, userId) => {
+  return await api.put(`/videos/like/${videoId}`,{ videoId, userId });
+};
+
+// Dislike Video API
+export const dislikeVideo = async (videoId, userId) => {
+  return await api.put(`/videos/dislike/${videoId}`,{ videoId, userId });
+};
+
+export const updateAvatarURL = (avatarUrl) => {
+  const token = localStorage.getItem('authToken');
+
+  return api.put(
+    '/user/avatar',
+    { avatarUrl },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,  // <-- This is required
+      },
+    }
+  );
+};

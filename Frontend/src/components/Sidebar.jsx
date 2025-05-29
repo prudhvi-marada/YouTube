@@ -1,48 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Sidebar.css';
+import '../App.css'
 
 const Sidebar = ({isOpen}) => {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <Link to="/" className="sidebar-link">
-        🏠 Home
+        🏠  Home
       </Link>
-      <Link to="/explore" className="sidebar-link">
-        🔍 Explore
+       <Link to="/channel" className="sidebar-link">
+        👤  My Channel
       </Link>
-      <Link to="/video" className="sidebar-link">
-        📺 Subscriptions
-      </Link>
-      <Link to="/channel" className="sidebar-link">
-        👤 My Channel
-      </Link>
+      <div className='sidebar-link'>
+       📁  〉You
+      </div>
      <div className='sidebar-link'>
-        History
+       🔍  Explore
+      </div>
+     
+     <div className='sidebar-link'>
+       🕓  History
       </div>
        <div className='sidebar-link'>
-        Your Videos
+        📹  Your Videos
       </div>
        <div className='sidebar-link'>
-        Your Courses
+         🎓  Your Courses
       </div>
        <div className='sidebar-link'>
-        Watch Later
+       ⏱️  Watch Later
       </div>
       <div className='sidebar-link'>
-        Liked Videos
+       👍  Liked Videos
       </div>
        <div className='sidebar-link'>
-        Downloads
+         ⬇️  Downloads
       </div>
       <div className='sidebar-link'>
-        Your Clips
+       ✂️  Your Clips
       </div>
        <div className='sidebar-link'>
-        Liked Videos
+        ❤️  Liked Videos
       </div>
        <div className='sidebar-link'>
-        Your Clips
+        🔔  Subscriptions
       </div>
       
     </aside>

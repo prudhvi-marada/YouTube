@@ -1,6 +1,7 @@
 import Video from '../models/videoModel.js'
 import Channel from '../models/channelModel.js'
 import Comment from '../models/commentModel.js';
+const userVideoAction = {};
 export const uploadVideo=async(req,res)=>{
     try{
         const { title, thumbnailUrl, videoUrl, description, channelId, category } = req.body;
@@ -33,7 +34,7 @@ export const getVideos=async(req,res)=>{
     try{
         const id=req.params.id;
         const video=await Video.findById(id)
-        .populate('channel uploader', 'channelName username')
+        .populate('channel', 'channelName').populate('uploader','name avatar')
         .populate({
         path: 'comments',
         populate: {
@@ -71,4 +72,72 @@ export const deleteVideo=async(req,res)=>{
 
     }
 };
+
+export const likeFun=async(req,res)=>{
+   const { videoId, userId } = req.body;
+  if (!userId) return res.status(400).json({ message: 'User ID required' });
+
+  const key = `${userId}:${videoId}`;
+  const action = userVideoAction[key];
+
+  try {
+    let update = {};
+
+    if (action === 'like') {
+      // Remove like
+      update = { $inc: { likes: -1 } };
+      delete userVideoAction[key];
+    } else {
+      // Add like
+      update = { $inc: { likes: 1 } };
+      if (action === 'dislike') {
+        update.$inc.dislikes = -1;
+      }
+      userVideoAction[key] = 'like';
+    }
+
+    const updatedVideo = await Video.findByIdAndUpdate(videoId, update, { new: true });
+    res.status(200).json({
+      likes: updatedVideo.likes,
+      dislikes: updatedVideo.dislikes,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error', error: err.message });
+  }
+};
+
+export const disLikeFun=async(req,res)=>{
+  
+    const { videoId, userId } = req.body;
+  if (!userId) return res.status(400).json({ message: 'User ID required' });
+
+  const key = `${userId}:${videoId}`;
+  const action = userVideoAction[key];
+
+  try {
+    let update = {};
+
+    if (action === 'dislike') {
+      update = { $inc: { dislikes: -1 } };
+      delete userVideoAction[key];
+    } else {
+      update = { $inc: { dislikes: 1 } };
+      if (action === 'like') {
+        update.$inc.likes = -1;
+      }
+      userVideoAction[key] = 'dislike';
+    }
+
+    const updatedVideo = await Video.findByIdAndUpdate(videoId, update, { new: true });
+    res.status(200).json({
+      likes: updatedVideo.likes,
+      dislikes: updatedVideo.dislikes,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error', error: err.message });
+  }
+};
+
 

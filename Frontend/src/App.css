@@ -3,7 +3,7 @@
 }
 
 .sidebar {
-  width: 240px; /* or any width you like */
+  width: 15vw; /* or any width you like */
   transition: width 0.3s ease;
 }
 
@@ -27,3 +27,11 @@
 .content.full-width {
   margin-left: 0;
 }
+
+@media screen and (max-width: 768px) {
+  
+  .sidebar{
+    display: none;
+  }
+}
+

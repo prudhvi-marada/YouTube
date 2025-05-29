@@ -1,48 +1,56 @@
 .v-upload-form {
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #ffffff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   height: 80vh;
-  overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;
-
+  margin: 1rem auto;
+  padding: 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  color: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 80vh;
 }
 
 .v-upload-form h2 {
   text-align: center;
+  font-size: 2rem;
+  color: #ffffff;
   margin-bottom: 1.5rem;
-  color: #333;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .v-upload-form label {
   display: block;
-  margin-bottom: 1rem;
-  color: #444;
-  font-weight: 600;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #e0e0e0;
 }
 
-.v-upload-form input[type="text"],
-textarea,
-select {
+.v-upload-form input,
+.v-upload-form textarea,
+.v-upload-form select {
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.4rem;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
   font-size: 1rem;
-  transition: border 0.3s ease;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
 .v-upload-form input:focus,
-textarea:focus,
-select:focus {
-  border-color: #5a67d8;
-  outline: none;
+.v-upload-form textarea:focus,
+.v-upload-form select:focus {
+  border-color: #00c6ff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .v-upload-form textarea {
@@ -50,28 +58,57 @@ select:focus {
   min-height: 100px;
 }
 
-.v-upload-form button[type="submit"] {
+.v-upload-form button {
+  margin-top: 2rem;
   width: 100%;
   padding: 0.9rem;
-  background-color: #5a67d8;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.v-upload-form button:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  transform: scale(1.02);
+}
+
+.v-upload-form button:disabled {
+  background: #444;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.message {
   margin-top: 1rem;
-  transition: background 0.3s ease;
-}
-
-.v-upload-form button[type="submit"]:hover {
-  background-color: #434190;
-  margin-bottom: 10px;
-}
-
-.v-upload-form p {
+  font-weight: bold;
   text-align: center;
-  margin-top: 1rem;
-  font-weight: 500;
-  color: #2d3748;
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.message:before {
+  content: "📢 ";
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .v-upload-form {
+    padding: 1.5rem;
+    margin: 2rem 1rem;
+  }
+
+  .v-upload-form h2 {
+    font-size: 1.6rem;
+  }
+
+  .v-upload-form button {
+    font-size: 1rem;
+  }
 }

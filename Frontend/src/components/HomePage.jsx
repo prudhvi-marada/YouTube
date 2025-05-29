@@ -1,67 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import VideoCard from './VideoCard';
-import { getAllVideos } from '../axios/api';
+import { getAllVideos,getChannelDetails } from '../axios/api';
 import '../styles/HomePage.css';
 
-const categories = ['All', 'Education', 'movies', 'Entertainment', 'News', 'Music'];
+const categories = ['All', 'Education', 'Movies', 'Entertainment', 'News', 'Music'];
 
 const HomePage = ({ sidebarOpen }) => {
   const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+
   const { term } = useParams(); // From URL (for search)
 
-  const fetchVideos = async () => {
+  // Use useCallback to memoize fetchVideos and avoid unnecessary re-creations
+  const fetchVideos = useCallback(async () => {
     try {
-      const data = await getAllVideos();
-
-      // If search term is present, filter by title or category
+      const res = await getAllVideos();
+     // console.log(res)
       if (term) {
         const lowerTerm = term.toLowerCase();
-        const filtered = data.filter(
+        const filtered = res.data.filter(
           (v) =>
             v.title?.toLowerCase().includes(lowerTerm) ||
             v.category?.toLowerCase().includes(lowerTerm)
         );
         setVideos(filtered);
       } else if (selectedCategory === 'All') {
-        setVideos(data);
+       // console.log(res)
+        setVideos(res.data);
       } else {
-        const filtered = data.filter(
+        const filtered =Array.isArray(res.data) ? res.data.filter(
           (v) => v.category?.toLowerCase() === selectedCategory.toLowerCase()
-        );
+        ):[];
         setVideos(filtered);
       }
-    } catch (error) {
-      console.error('Error fetching videos:', error.message);
+    } catch {
+       setVideos([]); // Clear videos on error for better UX
     }
-  };
+  }, [term, selectedCategory]);
+   
+    const fetchChannel = async () => {
+            try {
+              if (!storedUser?.id) {
+                throw new Error('User not logged in or missing user ID');
+              }
+              const res = await getChannelDetails(storedUser.id);
+              if (!res.data) throw new Error('No channel data received');
+              
+              localStorage.setItem('chanelId', res.data._id || '');
+             
+            } catch(e) {
+             console.log("Error fetching channel:", e.response?.data || e.message);
+            } 
+          };
 
   useEffect(() => {
-    fetchVideos();
-  }, [selectedCategory, term]); // Re-fetch when search or category changes
+    fetchVideos();   
+    fetchChannel();       
+  }, [fetchVideos]);
 
   return (
     <div className="home-wrapper">
       {!term && (
-        <div className="category-bar">
+        <nav className="category-bar" aria-label="Video Categories">
           {categories.map((cat) => (
             <button
               key={cat}
               className={`category-btn ${selectedCategory === cat ? 'active' : ''}`}
               onClick={() => setSelectedCategory(cat)}
+              aria-pressed={selectedCategory === cat}
+              type="button"
             >
               {cat}
             </button>
           ))}
-        </div>
+        </nav>
       )}
 
       <div className={`video-grid ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        {videos.length > 0 ? (
+        {Array.isArray(videos) && videos.length > 0 ? (
           videos.map((video) => <VideoCard key={video._id} video={video} />)
         ) : (
-          <p>No videos found.</p>
+          <p role="alert">No videos found.</p>
         )}
       </div>
     </div>

@@ -10,7 +10,7 @@ export const registerUser=async(req,res)=>{
             return  res.status(400).json({message:"user already exits try another mail"})
         }
         const hpassword=await bcrypt.hash(password,10);
-        const user=new User({name,email,password:hpassword},avatar);
+        const user=new User({name,email,password:hpassword,avatar});
         await user.save();
        res.status(201).json({message:"user registerd successfully"})
     }

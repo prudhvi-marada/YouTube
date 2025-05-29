@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/VideoCard.css';
+import '../App.css'
 
 const VideoCard = ({ video }) => {
   return (

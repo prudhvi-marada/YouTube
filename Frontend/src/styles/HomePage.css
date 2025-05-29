@@ -1,23 +1,24 @@
 /* styles/HomePage.css */
 
 .home-wrapper {
-  padding: 16px;
   transition: margin-left 0.3s;
+  padding: 20px;
+  width:80vw;
+
 }
 
-@media screen and (max-width: 768px) {
-  .home-wrapper {
-    margin-left: 60px;
-  }
-}
+
 
 .category-bar {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   overflow-x: auto;
   gap: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 20px;
+  width:100%;
 }
 
 .category-btn {
@@ -30,6 +31,8 @@
   cursor: pointer;
   transition: background-color 0.3s;
   white-space: nowrap;
+  width:100%;
+
 }
 
 .category-btn:hover {
@@ -44,11 +47,13 @@
 
 .video-grid {
   display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+  width:100%;
+  flex-wrap:wrap;
   gap: 15px;
   padding: 10px;
   transition: all 0.3s ease;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  height: 80vh;
+  height: 72vh;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; 
@@ -56,7 +61,30 @@
 
 .sidebar-closed {
   padding-left: 20px;
+  width:95vw;
 }
+
+@media screen and (max-width: 768px) {
+  .home-wrapper
+   {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+   .video-card iframe,
+  .video-grid{
+  display: grid;
+  grid-template-columns: 1fr; 
+   
+  }
+
+  .sidebar{
+    display: none;
+  }
+}
+
+
+
 
 
 
