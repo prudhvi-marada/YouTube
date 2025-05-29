@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/CreateChannelPage.css';
+import '../styles/createChannelPage.css';
 import { createChannel } from '../axios/api';
 import '../App.css'
 

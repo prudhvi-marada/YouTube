@@ -17,10 +17,9 @@
 .v-upload-form h2 {
   text-align: center;
   font-size: 2rem;
-  color: #ffffff;
+  color: cornflowerblue;
   margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  -webkit-text-fill-color: transparent;
+  background-color:transparent;
 }
 
 .v-upload-form label {
