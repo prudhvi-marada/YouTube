@@ -43,39 +43,39 @@ How to Run :
 
 run below commands to setup Backend :
 
-cd backend
-npm install
+-cd backend
+-npm install
 
 
 ## setup .env in backend:
 
-PORT=3000
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_secret
+-PORT=3000
+-MONGODB_URI=your_mongodb_uri
+-JWT_SECRET=your_secret
 
 ## Run Backend:
 
-npm start
+-npm start
 
 ##  Setup Frontend:
 
-cd Frontend
-npm install
+-cd Frontend
+-npm install
 
 ## setup .env in backend:
 
-VITE_API_BASE_URL=/api
+-VITE_API_BASE_URL=/api
 
 ## Run frontend:
 
-npm run dev
+-npm run dev
 
 ## Learnings
 
-Deep understanding of MERN stack integration
+-Deep understanding of MERN stack integration
 
-JWT-based auth and protected routes
+-JWT-based auth and protected routes
 
-Responsive UI design 
+-Responsive UI design 
 
-Deployment using Vercel and Render
+-Deployment using Vercel and Render
