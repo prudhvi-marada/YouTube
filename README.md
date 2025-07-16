@@ -3,7 +3,7 @@
 A full-stack **YouTube Clone** built with the **MERN stack** (MongoDB, Express, React, Node.js). This project allows users to browse, upload, and watch videos just like on the original YouTube platform.
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - React.js + Vite
@@ -24,18 +24,18 @@ A full-stack **YouTube Clone** built with the **MERN stack** (MongoDB, Express, 
 - Render.com (Backend)
 
 
-### ✅ User Side
-- 🔍 Browse videos by category
-- 📺 Watch video player
-- 🔐 Sign Up / Login with JWT
-- 🔗 Persistent authentication via localStorage
-- 🔎 Search functionality
-- 💬 Comment system 
+###  User Side
+- Browse videos by category
+-  Watch video player
+-  Sign Up / Login with JWT
+-  Persistent authentication via localStorage
+-  Search functionality
+-  Comment system 
 
-### ✅ Creator Side
-- 📤 Upload videos with title, description, thumbnail, and video URL
-- 📝 Manage their uploaded videos
-- 📊 View video details on their own channel
+###  Creator Side
+-  Upload videos with title, description, thumbnail, and video URL
+-  Manage their uploaded videos
+-  View video details on their own channel
 
 ## How to Run 
 
