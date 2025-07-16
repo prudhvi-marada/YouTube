@@ -16,7 +16,6 @@ A full-stack **YouTube Clone** built with the **MERN stack** (MongoDB, Express, 
 - Express.js
 - MongoDB (Mongoose)
 - JWT for Authentication
-- Multer for file upload (if used)
 - CORS, dotenv, express-validator
 
 ### Deployment
